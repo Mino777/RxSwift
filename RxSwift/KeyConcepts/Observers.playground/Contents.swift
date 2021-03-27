@@ -27,7 +27,7 @@ import RxSwift
  # Observers
  */
 
-Observable<Int>.create { (observer) -> Disposable in
+let o1 = Observable<Int>.create { (observer) -> Disposable in
    observer.on(.next(0))
    observer.onNext(1)
    
@@ -36,11 +36,29 @@ Observable<Int>.create { (observer) -> Disposable in
    return Disposables.create()
 }
 
+// #1
+o1.subscribe {
+    print("-- Start --")
+    print($0)
+    
+    if let elem = $0.element {
+        print(elem)
+    }
+    print("-- End --")
+}
 
+print("---------")
+
+// #2
+o1.subscribe(onNext: { elem in
+    print(elem)
+})
 
 Observable.from([1, 2, 3])
 
-
+// 중요한 규칙 Observer는 동시에 두개 이상의 이벤트를 처리하지않음.
+// Observable은 Observer가 하나의 이벤트를 처리한 후에 이어지는 이벤트를 처리함.
+// 여러 이벤트를 동시에 처리하지않음.
 
 
 

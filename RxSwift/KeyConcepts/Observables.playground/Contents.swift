@@ -23,10 +23,20 @@
 import UIKit
 import RxSwift
 
-/*:
- # Observables
- */
+// Observable 를 생성, 정의하는 방법 크게 두가지
+// #1 create 연산자 활용
+Observable<Int>.create { (observer) -> Disposable in
+    observer.onNext(0)
+    observer.onNext(1)
+    
+    observer.onCompleted()
+    
+    return Disposables.create()
+}
 
+
+// #2 다른 여러가지 연산자 활용
+Observable.from([0, 1])
 
 
 
