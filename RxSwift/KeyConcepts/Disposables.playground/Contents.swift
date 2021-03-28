@@ -23,18 +23,48 @@
 import UIKit
 import RxSwift
 
-/*:
- # Disposables
- */
+let subscription1 = Observable.from([1, 2, 3])
+    .subscribe(onNext: { elem in
+        print("Next", elem)
+    }, onError: { error in
+        print("Error", error)
+    }, onCompleted: {
+        print("Completed")
+    }, onDisposed: {
+        print("Disposed")
+    })
+
+subscription1.dispose()
 
 
+var disposeBag = DisposeBag()
+
+Observable.from([1, 2, 3])
+    .subscribe {
+        print($0)
+    }.disposed(by: disposeBag)
+
+disposeBag = DisposeBag()
 
 
+let subscription2 = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+    .subscribe(onNext: { elem in
+        print("Next", elem)
+    }, onError: { error in
+        print("Error", error)
+    }, onCompleted: {
+        print("Completed")
+    }, onDisposed: {
+        print("Disposed")
+    })
 
+DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+    subscription2.dispose()
+    // 이경우에도 연산자를 활용해서 처리해주는 것이 좋음.
+}
 
-
-
-
+// 직접 dispose를 호출해주는건 권장되지 않음.
+// DisposeBag 으로 관리해주는것이 가장 좋음.
 
 
 
