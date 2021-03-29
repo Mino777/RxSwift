@@ -29,9 +29,17 @@ import RxSwift
 
 let bag = DisposeBag()
 
+// Operator 중 하나인 take(n)은 Observable이 방출하는 요소 중에서 처음부터 N개의 요소만 전달해주는 연산자이다.
+// Operator 중 하나인 filter는 특정 요건을 충족한 요소만 필터링하여 전달해주는 연산자이다.
+// 아래 코드는 take(N), filter Operator를 사용하여 1~5번째 까지의 요소 중 2의 배수만 필터링하여 전달해주는 과정이다.
 Observable.from([1, 2, 3, 4, 5, 6, 7, 8, 9])
-   .subscribe { print($0) }
-   .disposed(by: bag)
+    .take(5)
+    .filter { $0.isMultiple(of: 2) }
+    .subscribe { print($0) }
+    .disposed(by: bag)
+
+// 위에서 사용한 take, filter 연산자 처럼 연산자를 필요에 따라 붙여서 다수 사용이 가능하다.
+// 단, 연산자의 실행 순서에 따라 결과가 달라질 수 있음에 주의해야 한다.
 
 
 
