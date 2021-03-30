@@ -38,5 +38,15 @@ class MemoListViewController: UIViewController, ViewModelBindableType {
             }.disposed(by: disposeBag)
         
         addButton.rx.action = viewModel.makeCreateAction()
+        
+        // zip 연산자로 두 멤버가 리턴하는 Observable을 병합
+        // 선택 된 메모와 indexPath가 튜플상태로 병합되어 방출
+        Observable.zip(listTableView.rx.modelSelected(Memo.self), listTableView.rx.itemSelected)
+            .do(onNext: { [unowned self] (_, IndexPath) in
+                // 선택 된 셀을 다시 선택 해제상태로 복귀
+                self.listTableView.deselectRow(at: IndexPath, animated: true)
+            }).map { $0.0 } // 선택 된 모델을 detailAction (선택 메모에 맞는 상세화면으로 이동)과 바인딩
+            .bind(to: viewModel.detailAction.inputs)
+            .disposed(by: disposeBag)
     }
 }
