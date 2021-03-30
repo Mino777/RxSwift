@@ -28,6 +28,7 @@
 		F561649A2611B1D300C40EA7 /* SceneCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56164992611B1D300C40EA7 /* SceneCoordinatorType.swift */; };
 		F561649D2611B25100C40EA7 /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F561649C2611B25100C40EA7 /* SceneCoordinator.swift */; };
 		F59852772612B91D00DF7F32 /* CommonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59852762612B91D00DF7F32 /* CommonViewModel.swift */; };
+		F598527B261302A900DF7F32 /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F598527A261302A900DF7F32 /* CoreDataStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		F56164992611B1D300C40EA7 /* SceneCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinatorType.swift; sourceTree = "<group>"; };
 		F561649C2611B25100C40EA7 /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		F59852762612B91D00DF7F32 /* CommonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonViewModel.swift; sourceTree = "<group>"; };
+		F598527A261302A900DF7F32 /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				F561643C261193B900C40EA7 /* RxMemo.xcdatamodeld */,
+				F598527A261302A900DF7F32 /* CoreDataStorage.swift */,
 			);
 			path = CoreDataStorage;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				F561649A2611B1D300C40EA7 /* SceneCoordinatorType.swift in Sources */,
 				F561648826119E5D00C40EA7 /* MemoListViewModel.swift in Sources */,
 				F561648B26119E7A00C40EA7 /* MemoDetailViewModel.swift in Sources */,
+				F598527B261302A900DF7F32 /* CoreDataStorage.swift in Sources */,
 				F59852772612B91D00DF7F32 /* CommonViewModel.swift in Sources */,
 				F56164942611AFD100C40EA7 /* TransitionModel.swift in Sources */,
 				F561647F26119E0400C40EA7 /* MemoListViewController.swift in Sources */,

@@ -11,7 +11,7 @@ import RxCocoa
 import Action
 
 class MemoDetailViewModel: CommonViewModel {
-    let memo: Memo
+    var memo: Memo
     let disposeBag = DisposeBag()
     
     private var formatter: DateFormatter = {
@@ -48,6 +48,7 @@ class MemoDetailViewModel: CommonViewModel {
             // .map { _ in } 으로 Observable<Void> 형으로 변환할 수 있음.
              self.storage.update(memo: memo, content: input)
                 .subscribe(onNext: { updated in
+                    self.memo = updated
                     self.contents.onNext([
                         updated.content,
                         self.formatter.string(from: updated.insertDate)
