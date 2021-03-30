@@ -32,10 +32,8 @@ class MemoListViewController: UIViewController, ViewModelBindableType {
         
         // 메모정보를 방출하는 Observable과 tableView를 바인딩.
         viewModel.memoList
-            .bind(to: listTableView.rx.items(cellIdentifier: "cell")) { row, memo, cell in
-                cell.textLabel?.text = memo.content
-                
-            }.disposed(by: disposeBag)
+            .bind(to: listTableView.rx.items(dataSource: viewModel.dataSource))
+            .disposed(by: disposeBag)
         
         addButton.rx.action = viewModel.makeCreateAction()
         
@@ -49,6 +47,8 @@ class MemoListViewController: UIViewController, ViewModelBindableType {
             .bind(to: viewModel.detailAction.inputs)
             .disposed(by: disposeBag)
         
-        
+        listTableView.rx.modelDeleted(Memo.self)
+            .bind(to: viewModel.deleteAction.inputs)
+            .disposed(by: disposeBag)
     }
 }
