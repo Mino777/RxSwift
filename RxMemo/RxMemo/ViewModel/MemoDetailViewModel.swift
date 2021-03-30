@@ -12,6 +12,7 @@ import Action
 
 class MemoDetailViewModel: CommonViewModel {
     let memo: Memo
+    let disposeBag = DisposeBag()
     
     private var formatter: DateFormatter = {
         let format = DateFormatter()
@@ -38,5 +39,32 @@ class MemoDetailViewModel: CommonViewModel {
     
     lazy var popAction = CocoaAction { [unowned self] in
         return self.sceneCoordinator.close(animated: true).asObservable().map { _ in }
+    }
+    
+    func performUpdate(memo: Memo) -> Action<String, Void> {
+        return Action { input in
+            // 입력 값으로 메모를 업데이트
+            // 반환형을 보면 출력타입이 리턴형으로 void를 선언하고 있음.
+            // .map { _ in } 으로 Observable<Void> 형으로 변환할 수 있음.
+             self.storage.update(memo: memo, content: input)
+                .subscribe(onNext: { updated in
+                    self.contents.onNext([
+                        updated.content,
+                        self.formatter.string(from: updated.insertDate)
+                    ])
+                }).disposed(by: self.disposeBag)
+            
+            return Observable.empty()
+        }
+    }
+    
+    func makeEditAction() -> CocoaAction {
+        return CocoaAction { _ in
+            let composeViewModel = MemoComposeViewModel(title: "메모 편집", content: self.memo.content, sceneCoordinator: self.sceneCoordinator, storage: self.storage, saveAction: self.performUpdate(memo: self.memo))
+            
+            let composeScene = Scene.compose(composeViewModel)
+            
+            return self.sceneCoordinator.transition(to: composeScene, using: .modal, animated: true).asObservable().map { _ in }
+        }
     }
 }
