@@ -34,7 +34,7 @@ class SceneCoordinator: SceneCoordinatorType {
         case .root:
             // .root를 선택하면 해당 viewController가 window의 rootViewController로 지정되고, completed 이벤트를 전달.
             // root인 경우 그냥 rootViewController를 바꿔주기만 하면 됨.
-            currentVC = target
+            currentVC = target.sceneViewController
             window.rootViewController = target
             
             // rootViewController 설정 후, subject는 Completed 이벤트를 전달.
@@ -48,9 +48,16 @@ class SceneCoordinator: SceneCoordinatorType {
                 break
             }
             
+            // navigationDelegate 메서드가 호출되는 시점마다 next 이벤트를 방출하는 control 이벤트.
+            // 이곳에서 currentVC 속성을 업데이트 해주면 detailViewController의 backButton이 기본 backButton 이면서 정상적으로 close() 메서드를 실행할 수 있게되면서 화면전환 문제가 해결.
+            nav.rx.willShow
+                .subscribe(onNext: { [unowned self] evt in
+                    self.currentVC = evt.viewController.sceneViewController
+                }).disposed(by: disposeBag)
+            
             // 만약 네비게이션 컨트롤러가 정상적으로 임베디드 되어 있다면, pushViewController를 수행하고, completed 이벤트를 전달.
             nav.pushViewController(target, animated: animated)
-            currentVC = target
+            currentVC = target.sceneViewController
             
             subject.onCompleted()
             
@@ -59,7 +66,7 @@ class SceneCoordinator: SceneCoordinatorType {
                 subject.onCompleted()
             }
             
-            currentVC = target
+            currentVC = target.sceneViewController
         }
         
         // ignoreElements : 반환값이 Completable로 변환되어 반환된다.
@@ -76,7 +83,7 @@ class SceneCoordinator: SceneCoordinatorType {
             if let presentingVC = self.currentVC.presentingViewController {
                 // dismiss 가능하면 처리
                 self.currentVC.dismiss(animated: animated) {
-                    self.currentVC = presentingVC
+                    self.currentVC = presentingVC.sceneViewController
                     completable(.completed)
                 }
                 
@@ -97,5 +104,12 @@ class SceneCoordinator: SceneCoordinatorType {
             
             return Disposables.create()
         }
+    }
+}
+
+extension UIViewController {
+    var sceneViewController: UIViewController {
+        // sceneViewController는 만약 네비게이션 컨테이너라면 맨 처음 child를 리턴하고, 나머지 경우네느 self를 그대로 리턴.
+        return self.children.first ?? self
     }
 }

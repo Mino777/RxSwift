@@ -48,5 +48,7 @@ class MemoListViewController: UIViewController, ViewModelBindableType {
             }).map { $0.0 } // 선택 된 모델을 detailAction (선택 메모에 맞는 상세화면으로 이동)과 바인딩
             .bind(to: viewModel.detailAction.inputs)
             .disposed(by: disposeBag)
+        
+        
     }
 }
