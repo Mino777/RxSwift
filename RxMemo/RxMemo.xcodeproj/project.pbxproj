@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6A5175D206EB425DA2FEFB72 /* Pods_RxMemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6783055B03D2FD84A28C4DE9 /* Pods_RxMemo.framework */; };
 		F5616434261193B900C40EA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5616433261193B900C40EA7 /* AppDelegate.swift */; };
-		F5616436261193B900C40EA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5616435261193B900C40EA7 /* SceneDelegate.swift */; };
 		F561643B261193B900C40EA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5616439261193B900C40EA7 /* Main.storyboard */; };
 		F561643E261193B900C40EA7 /* RxMemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F561643C261193B900C40EA7 /* RxMemo.xcdatamodeld */; };
 		F5616440261193B900C40EA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F561643F261193B900C40EA7 /* Assets.xcassets */; };
@@ -28,6 +27,7 @@
 		F56164972611B01200C40EA7 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56164962611B01200C40EA7 /* Scene.swift */; };
 		F561649A2611B1D300C40EA7 /* SceneCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56164992611B1D300C40EA7 /* SceneCoordinatorType.swift */; };
 		F561649D2611B25100C40EA7 /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F561649C2611B25100C40EA7 /* SceneCoordinator.swift */; };
+		F59852772612B91D00DF7F32 /* CommonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59852762612B91D00DF7F32 /* CommonViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +36,6 @@
 		6B6FFE42E2E7C442EDEFDD08 /* Pods-RxMemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxMemo.debug.xcconfig"; path = "Target Support Files/Pods-RxMemo/Pods-RxMemo.debug.xcconfig"; sourceTree = "<group>"; };
 		F5616430261193B900C40EA7 /* RxMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5616433261193B900C40EA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F5616435261193B900C40EA7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F561643A261193B900C40EA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F561643D261193B900C40EA7 /* RxMemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RxMemo.xcdatamodel; sourceTree = "<group>"; };
 		F561643F261193B900C40EA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		F56164962611B01200C40EA7 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		F56164992611B1D300C40EA7 /* SceneCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinatorType.swift; sourceTree = "<group>"; };
 		F561649C2611B25100C40EA7 /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
+		F59852762612B91D00DF7F32 /* CommonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +114,6 @@
 				F561646D2611953500C40EA7 /* ViewController */,
 				F561646C2611952400C40EA7 /* Model */,
 				F5616433261193B900C40EA7 /* AppDelegate.swift */,
-				F5616435261193B900C40EA7 /* SceneDelegate.swift */,
 				F561643F261193B900C40EA7 /* Assets.xcassets */,
 				F5616444261193B900C40EA7 /* Info.plist */,
 			);
@@ -148,6 +147,7 @@
 				F561648726119E5D00C40EA7 /* MemoListViewModel.swift */,
 				F561648A26119E7A00C40EA7 /* MemoDetailViewModel.swift */,
 				F561648D26119E9500C40EA7 /* MemoComposeViewModel.swift */,
+				F59852762612B91D00DF7F32 /* CommonViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -311,11 +311,11 @@
 				F561649126119EBD00C40EA7 /* ViewModelBindableType.swift in Sources */,
 				F5616434261193B900C40EA7 /* AppDelegate.swift in Sources */,
 				F56164762611994200C40EA7 /* MemoStorageType.swift in Sources */,
-				F5616436261193B900C40EA7 /* SceneDelegate.swift in Sources */,
 				F561643E261193B900C40EA7 /* RxMemo.xcdatamodeld in Sources */,
 				F561649A2611B1D300C40EA7 /* SceneCoordinatorType.swift in Sources */,
 				F561648826119E5D00C40EA7 /* MemoListViewModel.swift in Sources */,
 				F561648B26119E7A00C40EA7 /* MemoDetailViewModel.swift in Sources */,
+				F59852772612B91D00DF7F32 /* CommonViewModel.swift in Sources */,
 				F56164942611AFD100C40EA7 /* TransitionModel.swift in Sources */,
 				F561647F26119E0400C40EA7 /* MemoListViewController.swift in Sources */,
 				F561648526119E3600C40EA7 /* MemoComposeViewController.swift in Sources */,
