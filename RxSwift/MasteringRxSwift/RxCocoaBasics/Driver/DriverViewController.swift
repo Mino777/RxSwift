@@ -25,59 +25,65 @@ import RxSwift
 import RxCocoa
 
 enum ValidationError: Error {
-   case notANumber
+    case notANumber
 }
 
 class DriverViewController: UIViewController {
-   
-   let bag = DisposeBag()
-   
-   @IBOutlet weak var inputField: UITextField!
-   
-   @IBOutlet weak var resultLabel: UILabel!
-   
-   @IBOutlet weak var sendButton: UIButton!
-   
-   override func viewDidLoad() {
-      super.viewDidLoad()
-      
-      let result = inputField.rx.text
-         .flatMapLatest { validateText($0) }
-
-      result
-         .map { $0 ? "Ok" : "Error" }
-         .bind(to: resultLabel.rx.text)
-         .disposed(by: bag)
-
-      result
-         .map { $0 ? UIColor.blue : UIColor.red }
-         .bind(to: resultLabel.rx.backgroundColor)
-         .disposed(by: bag)
-
-      result
-         .bind(to: sendButton.rx.isEnabled)
-         .disposed(by: bag)
-      
-   }
+    
+    let bag = DisposeBag()
+    
+    @IBOutlet weak var inputField: UITextField!
+    
+    @IBOutlet weak var resultLabel: UILabel!
+    
+    @IBOutlet weak var sendButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // driver는 모든작업이 Main Thread에서 실행되는것을 보장.
+        // Sequence를 공유하기 때문에 불필요한 리소스 낭비를 막아줌.
+        // 따라서 UI binding의 경우 driver를 적극적으로 사용하는것이 좋다.
+        let result = inputField.rx.text.asDriver()
+            .flatMapLatest {
+                validateText($0)
+                    .asDriver(onErrorJustReturn: false)
+            }
+        
+        result
+            .map { $0 ? "Ok" : "Error" }
+            .drive(resultLabel.rx.text)
+            .disposed(by: bag)
+        
+        result
+            .map { $0 ? UIColor.blue : UIColor.red }
+            .drive(resultLabel.rx.backgroundColor)
+            .disposed(by: bag)
+        
+        result
+            .drive(sendButton.rx.isEnabled)
+            .disposed(by: bag)
+        
+    }
 }
 
 
 func validateText(_ value: String?) -> Observable<Bool> {
-   return Observable<Bool>.create { observer in
-      print("== \(value ?? "") Sequence Start ==")
-      
-      defer {
-         print("== \(value ?? "") Sequence End ==")
-      }
-      
-      guard let str = value, let _ = Double(str) else {
-         observer.onError(ValidationError.notANumber)
-         return Disposables.create()
-      }
-      
-      observer.onNext(true)
-      observer.onCompleted()
-      
-      return Disposables.create()
-   }
+    return Observable<Bool>.create { observer in
+        print("== \(value ?? "") Sequence Start ==")
+        
+        defer {
+            print("== \(value ?? "") Sequence End ==")
+        }
+        
+        guard let str = value, let _ = Double(str) else {
+            observer.onError(ValidationError.notANumber)
+            return Disposables.create()
+        }
+        
+        observer.onNext(true)
+        observer.onCompleted()
+        
+        return Disposables.create()
+    }
 }

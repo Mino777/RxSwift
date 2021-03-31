@@ -11,16 +11,20 @@ import RxSwift
 import RxCocoa
 
 class HelloRxCocoaViewController: UIViewController {
-   
-   let bag = DisposeBag()
-   
-   @IBOutlet weak var valueLabel: UILabel!
-   
-   @IBOutlet weak var tapButton: UIButton!
-   
-   override func viewDidLoad() {
-      super.viewDidLoad()
-      
-      
-   }
+    
+    let bag = DisposeBag()
+    
+    @IBOutlet weak var valueLabel: UILabel!
+    
+    @IBOutlet weak var tapButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tapButton.rx.tap
+            .map { "Hello, RxCocoa" }
+            .bind(to: valueLabel.rx.text)
+            .disposed(by: bag)
+        
+    }
 }
