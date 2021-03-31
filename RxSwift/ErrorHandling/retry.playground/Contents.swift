@@ -30,29 +30,32 @@ import RxSwift
 let bag = DisposeBag()
 
 enum MyError: Error {
-   case error
+    case error
 }
 
 var attempts = 1
 
 let source = Observable<Int>.create { observer in
-   let currentAttempts = attempts
-   print("#\(currentAttempts) START")
-   
-   if attempts < 3 {
-      observer.onError(MyError.error)
-      attempts += 1
-   }
-   
-   observer.onNext(1)
-   observer.onNext(2)
-   observer.onCompleted()
-         
-   return Disposables.create {
-      print("#\(currentAttempts) END")
-   }
+    let currentAttempts = attempts
+    print("#\(currentAttempts) START")
+    
+    if attempts < 3 {
+        observer.onError(MyError.error)
+        attempts += 1
+    }
+    
+    observer.onNext(1)
+    observer.onNext(2)
+    observer.onCompleted()
+    
+    return Disposables.create {
+        print("#\(currentAttempts) END")
+    }
 }
 
 source
-   .subscribe { print($0) }
-   .disposed(by: bag)
+    // retry 말그대로 옵져버블에서 에러가 나지 않을때까지 계속해서 옵져버블을 재시작.
+    // 에러가 계속 날경우 무한루프처럼 되버리기 때문에 파라미터로 맥스값을 줘서 사용하는것이 좋다.
+    .retry(5)
+    .subscribe { print($0) }
+    .disposed(by: bag)

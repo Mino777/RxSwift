@@ -30,16 +30,22 @@ import RxSwift
 let bag = DisposeBag()
 
 enum MyError: Error {
-   case error
+    case error
 }
 
 let subject = PublishSubject<Int>()
 let recovery = PublishSubject<Int>()
 
 subject
-   .subscribe { print($0) }
-   .disposed(by: bag)
+    // catchError는 소스 옵져버블에서 발생한 에러를 새로운 옵져버블로 교체하는 식으로 처리함.
+    .catchError { _ in recovery }
+    .subscribe { print($0) }
+    .disposed(by: bag)
 
+subject.onError(MyError.error)
 
+subject.onNext(11)
 
+recovery.onNext(22)
+recovery.onCompleted()
 
