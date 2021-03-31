@@ -73,7 +73,7 @@ class CustomBinderViewController: UIViewController {
         // 코드가 굉장히 단순하고 직관적!
         colorPicker.rx.selectedSegmentIndex
             .bind(to: valueLabel.rx.segmentedValue)
-            .disposed(by: DisposeBag())
+            .disposed(by: bag)
     }
 }
 
