@@ -47,6 +47,8 @@ extension Memo: Persistable {
         entity.setValue(insertDate, forKey: "insertDate")
         entity.setValue("\(insertDate.timeIntervalSinceReferenceDate)", forKey: "identity")
         
+        // save 메서드를 직접 호출해주어야 함. 그렇지 않으면 update한 내용이 사라질 수 도 있음.
+        // 그러므로 Rx로 CoreData를 구현할 때는 이부분을 조심해줘야 함.
         do {
             try entity.managedObjectContext?.save()
         } catch {

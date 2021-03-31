@@ -28,8 +28,9 @@ import RxSwift
  */
 
 let bag = DisposeBag()
-let subject = PublishSubject<Int>()
-let source = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance).take(5).multicast(subject)
+let source = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance).take(5).replay(5)
+    // buffer 크기를 지정해줄땐 가능한 작은 사이즈로 지정해줘야함. ( 메모리 관련 )
+    // 그래서 replayAll 같은 경우엔 가급적이면 사용하지 말아야함 ( forced unwrapping 느낌 )
 
 source
    .subscribe { print("🔵", $0) }

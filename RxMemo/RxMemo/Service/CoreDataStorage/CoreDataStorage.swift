@@ -71,6 +71,4 @@ class CoreDataStorage: MemoStorageType {
             return Observable.error(error)
         }
     }
-    
-    
 }

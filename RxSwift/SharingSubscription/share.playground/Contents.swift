@@ -28,7 +28,8 @@ import RxSwift
  */
 
 let bag = DisposeBag()
-let source = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance).debug()
+let source = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance).debug().share(replay: 5, scope: .forever)
+// share가 리턴하는 옵져버블은 refConunt Observable
 
 let observer1 = source
    .subscribe { print("🔵", $0) }
