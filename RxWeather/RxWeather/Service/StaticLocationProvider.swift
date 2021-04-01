@@ -23,3 +23,17 @@
 import Foundation
 import CoreLocation
 import RxSwift
+
+// 고정된 위치를 사용하는 테스트용 provider
+struct StaticLocationProvider: LocationProviderType {
+    
+    @discardableResult
+    func currentLocation() -> Observable<CLLocation> {
+        return Observable.just(CLLocation.gangnamStation)
+    }
+    
+    @discardableResult
+    func currentAddress() -> Observable<String> {
+        return Observable.just("강남역")
+    }
+}

@@ -23,3 +23,14 @@
 import Foundation
 import CoreLocation
 import RxSwift
+
+
+protocol LocationProviderType {
+    @discardableResult
+    // 현재 위치
+    func currentLocation() -> Observable<CLLocation>
+    
+    @discardableResult
+    // 현재 주소
+    func currentAddress() -> Observable<String>
+}
