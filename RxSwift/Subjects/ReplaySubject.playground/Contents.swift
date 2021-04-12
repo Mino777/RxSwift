@@ -34,4 +34,26 @@ enum MyError: Error {
    case error
 }
 
+let rs = ReplaySubject<Int>.create(bufferSize: 3)
 
+(1...10).forEach { rs.onNext($0) }
+
+rs.subscribe { print("Observer 1 >>", $0) }
+    .disposed(by: disposeBag)
+// 8 9 10
+
+rs.subscribe { print("Observer 2 >>", $0) }
+    .disposed(by: disposeBag)
+// 8 9 10
+
+rs.onNext(11)
+
+rs.subscribe { print("Observer 3 >>", $0) }
+    .disposed(by: disposeBag)
+// 9 10 11
+
+//rs.onCompleted()
+rs.onError(MyError.error)
+
+rs.subscribe { print("Observer 4 >>", $0) }
+    .disposed(by: disposeBag)
