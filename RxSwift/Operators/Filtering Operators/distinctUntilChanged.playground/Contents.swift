@@ -31,3 +31,7 @@ let disposeBag = DisposeBag()
 let numbers = [1, 1, 3, 2, 2, 3, 1, 5, 5, 7, 7, 7]
 
 
+Observable.from(numbers)
+    .distinctUntilChanged() // 1 3 2 3 1 5 7
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)

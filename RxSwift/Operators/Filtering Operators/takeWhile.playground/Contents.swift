@@ -30,4 +30,9 @@ import RxSwift
 let disposeBag = DisposeBag()
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-
+// 조건이 true이면 그 이후의 요소들은 방출하지 않음.
+Observable.from(numbers)
+    .takeWhile { !$0.isMultiple(of: 2) } // 홀수
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+// 1

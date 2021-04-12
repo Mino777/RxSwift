@@ -26,11 +26,15 @@ import RxSwift
 /*:
  # ignoreElements
  */
+// 작업의 성공과 실패만 알고싶을때 사용. ( 반환 값이 completable )
 
 let disposeBag = DisposeBag()
 let fruits = ["🍏", "🍎", "🍋", "🍓", "🍇"]
 
-
+Observable.from(fruits)
+    .ignoreElements()
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
 
 
 

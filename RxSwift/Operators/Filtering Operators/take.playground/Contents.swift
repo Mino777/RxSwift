@@ -26,11 +26,16 @@ import RxSwift
 /*:
  # take
  */
+// 처음 n개의 요소 또는 마지막 n개의 요소를 방출하는 방법과 요소의 방출 조건을 지정
 
 let disposeBag = DisposeBag()
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-
+Observable.from(numbers)
+    .take(5)
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+// 1 - 5
 
 
 

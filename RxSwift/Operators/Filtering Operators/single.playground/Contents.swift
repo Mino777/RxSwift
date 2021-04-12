@@ -26,8 +26,32 @@ import RxSwift
 /*:
  # single
  */
+// 하나의 요소가 방출되는 것을 보장
 
 let disposeBag = DisposeBag()
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
+Observable.just(1)
+    .single()
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
 
+Observable.from(numbers)
+    .single() // error(Sequence contains more than one element.)
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+
+Observable.from(numbers)
+    .single { $0 == 3 } // 3 completed
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+
+let subject = PublishSubject<Int>()
+
+subject.single()
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+
+subject.onNext(100) // 100 ( completed 전달 ㄴㄴ )
+
+subject.onCompleted() // 100 completed
