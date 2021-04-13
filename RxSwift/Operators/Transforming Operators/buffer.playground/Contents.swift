@@ -29,6 +29,10 @@ import RxSwift
 
 let disposeBag = DisposeBag()
 
-
+Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+    .buffer(timeSpan: .seconds(5), count: 3, scheduler: MainScheduler.instance)
+    .take(5)
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
 
 

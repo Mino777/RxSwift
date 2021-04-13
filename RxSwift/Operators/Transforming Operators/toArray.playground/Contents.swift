@@ -28,5 +28,16 @@ import RxSwift
  */
 
 let disposeBag = DisposeBag()
+let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
+let subject = PublishSubject<Int>()
+
+subject
+    .toArray()
+    .subscribe { print($0) }
+    .disposed(by: disposeBag)
+
+subject.onNext(1)
+subject.onNext(2)
+subject.onCompleted()
 
