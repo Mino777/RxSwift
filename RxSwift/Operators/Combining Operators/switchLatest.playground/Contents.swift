@@ -26,6 +26,7 @@ import RxSwift
 /*:
  # switchLatest
  */
+// 가장 최근에 방출된 옵저버블을 구독하고, 이 옵저버블이 전달하는 이벤트를 구독자에게 전달.
 
 let bag = DisposeBag()
 
@@ -36,3 +37,30 @@ enum MyError: Error {
 let a = PublishSubject<String>()
 let b = PublishSubject<String>()
 
+let subject = PublishSubject<Observable<String>>()
+
+subject
+    .switchLatest()
+    .subscribe { print($0) }
+    .disposed(by: bag)
+
+a.onNext("1")
+b.onNext("b")
+
+subject.onNext(a)
+
+a.onNext("2")
+b.onNext("b")
+
+subject.onNext(b)
+
+a.onNext("3")
+b.onNext("c")
+
+//a.onCompleted()
+//b.onCompleted()
+//
+//subject.onCompleted()
+
+a.onError(MyError.error) // nothing
+b.onError(MyError.error) // 최신 옵저버블인 비는 바로 error 방출

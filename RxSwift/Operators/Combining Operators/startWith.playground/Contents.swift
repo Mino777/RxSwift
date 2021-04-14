@@ -26,8 +26,16 @@ import RxSwift
 /*:
  # startWith
  */
+// 옵저버블 시퀀스 앞에 새로운 요소를 추가
 
 let bag = DisposeBag()
 let numbers = [1, 2, 3, 4, 5]
 
+Observable.from(numbers)
+    .startWith(0)
+    .startWith(-1, -2)
+    .startWith(-3)
+    .subscribe { print($0) }
+    .disposed(by: bag)
 
+// -3 , -1, -2, 0, 1 ~

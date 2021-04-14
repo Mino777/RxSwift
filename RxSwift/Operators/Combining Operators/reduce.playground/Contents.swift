@@ -26,6 +26,7 @@ import RxSwift
 /*:
  # reduce
  */
+// 시드 값과 옵저버블이 방출하는 요소를 대상으로 클로저를 실행하고 최종 결과를 옵저버블로 방출.
 
 let bag = DisposeBag()
 
@@ -40,8 +41,11 @@ print("== scan")
 o.scan(0, accumulator: +)
    .subscribe { print($0) }
    .disposed(by: bag)
-
+// 1 ~ 15
 print("== reduce")
 
-
+o.reduce(0, accumulator: +)
+    .subscribe { print($0) }
+    .disposed(by: bag)
+// 15 마지막 결과만 출력
 

@@ -26,6 +26,7 @@ import RxSwift
 /*:
  # withLatestFrom
  */
+// 트리거 옵저버블이 next 이벤트를 방출하면 데이터 옵저버블이 가장 최근에 방출한 next 이벤트를 구독자에게 전달
 
 let bag = DisposeBag()
 
@@ -36,4 +37,23 @@ enum MyError: Error {
 let trigger = PublishSubject<Void>()
 let data = PublishSubject<String>()
 
+trigger.withLatestFrom(data)
+    .subscribe { print($0) }
+    .disposed(by: bag)
 
+data.onNext("Hello")
+// nothing
+trigger.onNext(())
+trigger.onNext(())
+// Hello
+// Hello
+
+//data.onCompleted()
+//data.onError(MyError.error)
+//trigger.onNext(())
+// error
+
+trigger.onCompleted()
+// Hello
+// Hello
+// completed

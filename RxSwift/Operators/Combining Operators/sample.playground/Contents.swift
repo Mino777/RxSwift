@@ -26,6 +26,7 @@ import RxSwift
 /*:
  # sample
  */
+// 트리거 옵저버블이 next 이벤트를 전달할 때마다 데이터 옵저버블이 next 이벤트를 방출하지만, 동일한 next 이벤트를 반복해서 방출하지 않음.
 
 let bag = DisposeBag()
 
@@ -36,3 +37,20 @@ enum MyError: Error {
 let trigger = PublishSubject<Void>()
 let data = PublishSubject<String>()
 
+data.sample(trigger)
+    .subscribe { print($0) }
+    .disposed(by: bag)
+
+trigger.onNext(())
+data.onNext("Hello")
+
+trigger.onNext(())
+trigger.onNext(())
+// Hello
+
+//data.onCompleted()
+//trigger.onNext(())
+// completed
+
+data.onError(MyError.error)
+// error
