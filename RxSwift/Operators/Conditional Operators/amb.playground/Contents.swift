@@ -26,15 +26,28 @@ import RxSwift
 /*:
  # amb
  */
+// 여러 옵저버블 중에서 가장 먼저 이벤트를 방출하는 옵저버블을 선택 하는 연산자.
 
 let bag = DisposeBag()
 
 enum MyError: Error {
-   case error
+    case error
 }
 
 let a = PublishSubject<String>()
 let b = PublishSubject<String>()
 let c = PublishSubject<String>()
 
+//a.amb(b)
+Observable.amb([a, b, c])
+    .subscribe { print($0) }
+    .disposed(by: bag)
 
+a.onNext("A")
+b.onNext("B")
+// A
+
+b.onCompleted()
+// notihing
+a.onCompleted()
+// completed
